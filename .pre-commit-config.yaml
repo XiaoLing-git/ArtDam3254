@@ -1,0 +1,47 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace
+        files: ^(factory_tools/|tests/|base_project/|main.py|router.py)
+    -   id: end-of-file-fixer
+        files: ^(factory_tools/|tests/|base_project/|main.py|router.py)
+#    -   id: check-yaml
+#    -   id: check-added-large-files
+
+-   repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+        language_version: python3.10
+        files: ^(factory_tools/|tests/|base_project/|main.py|router.py)
+
+-   repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        files: ^(factory_tools/|tests/|base_project/|main.py|router.py)
+        args: ["--profile", "black"]  # 与black风格一致
+
+-   repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        files: ^(factory_tools/|tests/|base_project/|main.py|router.py)
+        args: ["--max-line-length=120"]
+        additional_dependencies: [flake8-bugbear]
+
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.4.1
+    hooks:
+      - id: mypy
+        files: ^(factory_tools/|tests/|base_project/|main.py|router.py)
+        args: [
+          --strict,
+          --ignore-missing-imports,  # 忽略找不到的模块
+          --show-error-codes,        # 显示错误代码
+        ]
+        additional_dependencies:
+          - types-requests
