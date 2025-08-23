@@ -46,7 +46,7 @@ else
 	$(RMDIR) "$(CURRENT_DIR)$(SEP)dist"
 
 #	clean next level folder
-	@for dir in factory_tools; do \
+	@for dir in $(SUB_FOLDER); do \
         make -C "$(CURRENT_DIR)$(SEP)$$dir" clean || exit 1; \
     done
 
@@ -61,7 +61,7 @@ install:
 
 check:
 	pre-commit run \
-	$(CURRENT_DIR)$(SEP)factory_tools \
+	$(CURRENT_DIR)$(SEP)src \
 	$(CURRENT_DIR)$(SEP)test \
 	$(CURRENT_DIR)$(SEP)base_project \
 	$(CURRENT_DIR)$(SEP)*py
