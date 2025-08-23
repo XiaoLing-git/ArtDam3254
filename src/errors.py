@@ -35,3 +35,9 @@ class DeviceAddressException(ArtException):
     """
     Device Address Exception.
     """
+
+
+class RegisterAddressException(ArtException):
+    """
+    Register Address Exception.
+    """

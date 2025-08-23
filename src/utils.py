@@ -1,6 +1,6 @@
 import logging
 
-from .errors import DeviceAddressException, HexCodeException, ModBusCrc16Exception
+from .errors import DeviceAddressException, HexCodeException, ModBusCrc16Exception, RegisterAddressException
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +31,21 @@ def assert_device_address(target: str) -> None:
         assert_hex_code(target)
     except Exception as e:
         raise DeviceAddressException(f"{e}")
+    return
+
+
+def assert_register_address(target: str) -> None:
+    """
+    assert register address format
+    :param target:
+    :return:
+    """
+    if len(target) != 4:
+        raise RegisterAddressException("Length Of Device Address Not Equal 4")
+    try:
+        assert_hex_code(target)
+    except Exception as e:
+        raise RegisterAddressException(f"{e}")
     return
 
 
