@@ -10,10 +10,22 @@ class ArtException(Exception):
 
     def __init__(self, msg: str) -> None:
         self._msg = msg
+        logger.error(f"{self.__class__.__name__} - {self._msg}")
 
     def __str__(self) -> str:
-        logger.error(f"{self.__class__.__name__} - {self._msg}")
         return self._msg
 
     def __repr__(self) -> str:
         return self._msg
+
+
+class ModBusCrc16Exception(ArtException):
+    """
+    ModBus Crc16 Exception.
+    """
+
+
+class HexCodeException(ArtException):
+    """
+    Hex Code Exception.
+    """
