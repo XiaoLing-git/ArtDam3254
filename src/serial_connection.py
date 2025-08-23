@@ -2,6 +2,8 @@ import logging
 
 from serial import EIGHTBITS, PARITY_NONE, STOPBITS_ONE, Serial
 
+from .errors import DeviceConnectionException, DeviceReconnectionException
+
 logger = logging.getLogger(__name__)
 
 
@@ -34,29 +36,47 @@ class SerialConnection:
         if self.__ser is None:
             logger.debug(
                 f"Connecting to device "
-                f"port={self.__port}, "
+                f"port={self.__port} "
                 f"baud_rate={self.__baud_rate} "
                 f"timeout={self.__timeout}"
             )
-            self.__ser = Serial(
-                port=self.__port,
-                baudrate=self.__baud_rate,
-                bytesize=EIGHTBITS,
-                stopbits=STOPBITS_ONE,
-                parity=PARITY_NONE,
-                timeout=self.__timeout,
-            )
+            try:
+                self.__ser = Serial(
+                    port=self.__port,
+                    baudrate=self.__baud_rate,
+                    bytesize=EIGHTBITS,
+                    stopbits=STOPBITS_ONE,
+                    parity=PARITY_NONE,
+                    timeout=self.__timeout,
+                )
+            except Exception as e:
+                raise DeviceConnectionException(
+                    f"Device Connection Exception Happened "
+                    f"port={self.__port} "
+                    f"baud_rate={self.__baud_rate} "
+                    f"timeout={self.__timeout} "
+                    f"{e}"
+                )
             logger.debug("Connecting to device success")
             return
         else:
             if self.__ser.closed:
                 logger.debug(
                     f"Serial port closed, Reconnecting to device "
-                    f"port={self.__port}, "
+                    f"port={self.__port} "
                     f"baud_rate={self.__baud_rate} "
                     f"timeout={self.__timeout}"
                 )
-                self.__ser.open()
+                try:
+                    self.__ser.open()
+                except Exception as e:
+                    raise DeviceReconnectionException(
+                        f"Device Reconnection Exception Happened "
+                        f"port={self.__port} "
+                        f"baud_rate={self.__baud_rate} "
+                        f"timeout={self.__timeout} "
+                        f"{e}"
+                    )
                 logger.debug("Reconnecting to device success")
                 return
             else:
@@ -68,7 +88,7 @@ class SerialConnection:
         if self.__ser is None:
             logger.debug(
                 f"Serial instance not connected "
-                f"port={self.__port}, "
+                f"port={self.__port} "
                 f"baud_rate={self.__baud_rate} "
                 f"timeout={self.__timeout}"
             )
@@ -77,7 +97,7 @@ class SerialConnection:
             if self.__ser.closed:
                 logger.debug(
                     f"Serial port closed already no need do this again"
-                    f"port={self.__port}, "
+                    f"port={self.__port} "
                     f"baud_rate={self.__baud_rate} "
                     f"timeout={self.__timeout}"
                 )
@@ -85,10 +105,19 @@ class SerialConnection:
             else:
                 logger.debug(
                     f"Device disconnect"
-                    f"port={self.__port}, "
+                    f"port={self.__port} "
                     f"baud_rate={self.__baud_rate} "
                     f"timeout={self.__timeout}"
                 )
-                self.__ser.close()
+                try:
+                    self.__ser.close()
+                except Exception as e:
+                    raise DeviceReconnectionException(
+                        f"Device Disconnection Exception Happened "
+                        f"port={self.__port} "
+                        f"baud_rate={self.__baud_rate} "
+                        f"timeout={self.__timeout} "
+                        f"{e}"
+                    )
                 logger.debug("Device disconnect success")
                 return

@@ -41,3 +41,21 @@ class RegisterAddressException(ArtException):
     """
     Register Address Exception.
     """
+
+
+class DeviceConnectionException(ArtException):
+    """
+    Device Connection Exception.
+    """
+
+
+class DeviceReconnectionException(ArtException):
+    """
+    Device Reconnection Exception.
+    """
+
+
+class DeviceDisconnectionException(ArtException):
+    """
+    Device Discconnection Exception.
+    """
