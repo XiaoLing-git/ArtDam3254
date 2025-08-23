@@ -27,7 +27,10 @@ def assert_device_address(target: str) -> None:
     """
     if len(target) != 2:
         raise DeviceAddressException("Length Of Device Address Not Equal 2")
-    assert_hex_code(target)
+    try:
+        assert_hex_code(target)
+    except Exception as e:
+        raise DeviceAddressException(f"{e}")
     return
 
 
