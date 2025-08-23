@@ -61,7 +61,7 @@ repos:
         args:  # 传递给 isort 的参数
           - --profile=black  # 与 black 格式化工具兼容（避免格式冲突）
           - --line-length=120  # 行宽限制（需与 black、flake8 保持一致）
-          - --multi_line=3  # 多行导入格式：3 表示垂直对齐（推荐与 black 配合）
+          - -m=3  # 多行导入格式：3 表示垂直对齐（推荐与 black 配合）
           - --trailing-comma  # 多行导入末尾添加逗号（符合 black 风格）
         files: \.py$  # 仅处理 Python 文件
 
