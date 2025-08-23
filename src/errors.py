@@ -57,5 +57,17 @@ class DeviceReconnectionException(ArtException):
 
 class DeviceDisconnectionException(ArtException):
     """
-    Device Discconnection Exception.
+    Device Disconnection Exception.
+    """
+
+
+class SerialWriteException(ArtException):
+    """
+    Device Serial Write Exception.
+    """
+
+
+class SerialReadException(ArtException):
+    """
+    Device Serial Read Exception.
     """

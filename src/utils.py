@@ -68,4 +68,4 @@ def modbus_crc16(target: str) -> str:
     except Exception as e:
         raise ModBusCrc16Exception(f"An exception occurred during calculation: {e}")
     logger.debug(f"Crc16 Target: {target} Result: {result}")
-    return result
+    return result.upper()
