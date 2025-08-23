@@ -29,3 +29,9 @@ class HexCodeException(ArtException):
     """
     Hex Code Exception.
     """
+
+
+class DeviceAddressException(ArtException):
+    """
+    Device Address Exception.
+    """

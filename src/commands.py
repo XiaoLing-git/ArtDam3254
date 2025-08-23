@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class FunctionCode(Enum):
-    """base function code statement"""
+    """base function code statement."""
 
     InputRead = "04"
     StateRead = "03"

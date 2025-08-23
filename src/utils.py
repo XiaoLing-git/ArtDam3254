@@ -1,6 +1,6 @@
 import logging
 
-from .errors import HexCodeException, ModBusCrc16Exception
+from .errors import DeviceAddressException, HexCodeException, ModBusCrc16Exception
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +16,18 @@ def assert_hex_code(target: str) -> None:
     for c in target:
         if c.upper() not in "0123456789ABCDEF":
             raise HexCodeException(f"char {c} can't not hex()")
+    return
+
+
+def assert_device_address(target: str) -> None:
+    """
+    assert device address format
+    :param target:
+    :return:
+    """
+    if len(target) != 2:
+        raise DeviceAddressException("Length Of Device Address Not Equal 2")
+    assert_hex_code(target)
     return
 
 
