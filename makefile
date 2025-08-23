@@ -18,7 +18,7 @@ endif
 
 
 RUN := poetry run
-SUB_FOLDER := factory_tools
+SUB_FOLDER := src test base_project
 
 
 clean_cache:
