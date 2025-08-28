@@ -18,7 +18,7 @@ endif
 
 
 RUN := poetry run
-SUB_FOLDER := src test base_project
+SUB_FOLDER := src test
 
 
 clean_cache:
