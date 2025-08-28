@@ -18,6 +18,7 @@ endif
 
 
 RUN := poetry run
+PRECOMMIT := pre-commit run
 SUB_FOLDER := src test
 
 
@@ -60,7 +61,7 @@ install:
 	poetry install
 
 check:
-	pre-commit run $(1)
+	$(PRECOMMIT) $(target)
 
 commit:clean
 	git add .
@@ -68,3 +69,8 @@ commit:clean
 
 push:commit
 	git push
+
+echo:
+	echo $1
+	echo $2
+	echo $2
