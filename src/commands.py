@@ -23,6 +23,11 @@ class BaseCommandModel(Base_Model):
     """
 
     Register_Address: str
+    CMD: str = ""
+
+    def model_post_init(self, __context: None) -> None:
+        """model post init"""
+        self._generate_cmd()
 
     def _generate_cmd(self) -> str:
         """generate format Input Read Command"""
@@ -32,11 +37,11 @@ class BaseCommandModel(Base_Model):
 
     def __str__(self) -> str:
         """__str__"""
-        return self._generate_cmd()
+        return self.CMD
 
     def __repr__(self) -> str:
         """__repr__"""
-        return self._generate_cmd()
+        return self.CMD
 
 
 ####################################################################################
@@ -58,8 +63,8 @@ class BaseReadCommand(BaseCommandModel):
             f"{convert_register_length_to_hex(self.Register_Count)}"
         )
         self.Crc16 = modbus_crc16(cmd)
-        cmd = cmd + self.Crc16
-        return cmd
+        self.CMD = cmd + self.Crc16
+        return self.CMD
 
 
 class InputReadCommand(BaseReadCommand):
@@ -101,8 +106,8 @@ class SingleWriteCommand(BaseWriteCommand):
         assert_single_data(self.Data)
         cmd: str = f"{self.Device_Address}" f"{self.Function_Code.value}" f"{self.Register_Address}" f"{self.Data}"
         self.Crc16 = modbus_crc16(cmd)
-        cmd = cmd + self.Crc16
-        return cmd
+        self.CMD = cmd + self.Crc16
+        return self.CMD
 
 
 class MultiWriteCommand(BaseWriteCommand):
@@ -147,5 +152,5 @@ class MultiWriteCommand(BaseWriteCommand):
             f"{self.Data}"
         )
         self.Crc16 = modbus_crc16(cmd)
-        cmd = cmd + self.Crc16
-        return cmd
+        self.CMD = cmd + self.Crc16
+        return self.CMD

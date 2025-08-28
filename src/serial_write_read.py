@@ -22,13 +22,11 @@ class SerialWriteRead(SerialConnection):
         :return:
         """
         assert_hex_code(cmd)
-        crc16: str = modbus_crc16(cmd)
-        cmd_with_crc: str = cmd.upper() + crc16
-        logger.debug(f"Write: {cmd_with_crc}")
+        logger.debug(f"Write: {cmd}")
         try:
-            self._ser.write(bytes.fromhex(cmd_with_crc))
+            self._ser.write(bytes.fromhex(cmd))
         except Exception as e:
-            raise SerialWriteException(f"Write Command:{cmd_with_crc} Fail {e}")
+            raise SerialWriteException(f"Write Command:{cmd} Fail {e}")
 
     def __read(self) -> str:
         buffer_length: int = self._ser.in_waiting
