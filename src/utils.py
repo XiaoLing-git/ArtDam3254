@@ -1,6 +1,7 @@
 """Utils."""
 
 import logging
+import time
 
 from .errors import (
     DeviceAddressException,
@@ -88,3 +89,22 @@ def modbus_crc16(target: str) -> str:
         raise ModBusCrc16Exception(f"An exception occurred during calculation: {e}")
     logger.debug(f"Crc16 Target: {target.upper()} Result: {result.upper()}")
     return result.upper()
+
+
+def convert_register_length_to_hex(_length: int) -> str:
+    """
+    Convert register length to recognizable hexadecimal characters
+    :param _length:
+    :return:
+    """
+    if _length < 0 or _length > 65535:
+        msg: str = f"Length of Register musy be  0 < Length  < 65536, current = {_length}"
+        logger.error(msg)
+        raise ValueError(msg)
+    hex_char: str = hex(_length).replace("0x", "")
+    start_time: float = time.time()
+    while len(hex_char) != 4:
+        if time.time() - start_time > 1:
+            break
+        hex_char = "0" + hex_char
+    return hex_char.upper()

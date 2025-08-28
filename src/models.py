@@ -15,4 +15,4 @@ class Base_Model(BaseModel):  # type: ignore[misc]
 
     Device_Address: str
     Function_Code: FunctionCode
-    Crc16: str
+    Crc16: str | None = None

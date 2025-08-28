@@ -2,9 +2,9 @@
 
 from pprint import pprint
 
-from src.commands import FunctionCode
+from src.commands import FunctionCode, InputReadCommand
 from src.serial_write_read import SerialWriteRead
-from src.utils import assert_function_code, modbus_crc16
+from src.utils import assert_function_code, modbus_crc16, convert_register_length_to_hex
 
 import logging
 
@@ -15,9 +15,14 @@ logging.basicConfig(
 )
 
 if __name__ == "__main__":
+    ic = InputReadCommand(Device_Address="01",
+                          Register_Address="0000",
+                          Register_Count=2)
+    print(ic)
+
     swr = SerialWriteRead(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)
     swr.connect()
-    swr.write("010300800007")
+    swr.write(str(ic))
     res = swr.read(timeout=5)
     print(res)
     swr.disconnect()
