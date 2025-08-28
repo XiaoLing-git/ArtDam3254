@@ -1,6 +1,7 @@
 """Main function entry, mainly used for debugging."""
 
-from pprint import pprint
+from src.models import Serial_Write_Read_Log_Output,Modbus_Crc16_Log_Output
+
 
 from src.commands import FunctionCode, InputReadCommand, StateReadCommand, SingleWriteCommand, MultiWriteCommand
 from src.serial_write_read import SerialWriteRead
@@ -15,6 +16,7 @@ logging.basicConfig(
 )
 
 if __name__ == "__main__":
+
 
 
     swr = SerialWriteRead(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)

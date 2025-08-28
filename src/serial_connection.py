@@ -5,6 +5,7 @@ import logging
 from serial import EIGHTBITS, PARITY_NONE, STOPBITS_ONE, Serial
 
 from .errors import DeviceConnectionException, DeviceReconnectionException
+from .models import Serial_Connection_Log_Output
 
 logger = logging.getLogger(__name__)
 
@@ -41,12 +42,13 @@ class SerialConnection:
     def connect(self) -> None:
         """connect to device."""
         if self.__ser is None:
-            logger.debug(
-                f"Connecting to device "
-                f"port={self.__port} "
-                f"baud_rate={self.__baud_rate} "
-                f"timeout={self.__timeout}"
-            )
+            if Serial_Connection_Log_Output:
+                logger.debug(
+                    f"Connecting to device "
+                    f"port={self.__port} "
+                    f"baud_rate={self.__baud_rate} "
+                    f"timeout={self.__timeout}"
+                )
             try:
                 self.__ser = Serial(
                     port=self.__port,
@@ -64,16 +66,18 @@ class SerialConnection:
                     f"timeout={self.__timeout} "
                     f"{e}"
                 )
-            logger.debug("Connecting to device success")
+            if Serial_Connection_Log_Output:
+                logger.debug("Connecting to device success")
             return
         else:
             if self.__ser.closed:
-                logger.debug(
-                    f"Serial port closed, Reconnecting to device "
-                    f"port={self.__port} "
-                    f"baud_rate={self.__baud_rate} "
-                    f"timeout={self.__timeout}"
-                )
+                if Serial_Connection_Log_Output:
+                    logger.debug(
+                        f"Serial port closed, Reconnecting to device "
+                        f"port={self.__port} "
+                        f"baud_rate={self.__baud_rate} "
+                        f"timeout={self.__timeout}"
+                    )
                 try:
                     self.__ser.open()
                 except Exception as e:
@@ -84,38 +88,43 @@ class SerialConnection:
                         f"timeout={self.__timeout} "
                         f"{e}"
                     )
-                logger.debug("Reconnecting to device success")
+                if Serial_Connection_Log_Output:
+                    logger.debug("Reconnecting to device success")
                 return
             else:
-                logger.debug("Device connected already, No need do this again")
+                if Serial_Connection_Log_Output:
+                    logger.debug("Device connected already, No need do this again")
                 return
 
     def disconnect(self) -> None:
         """disconnect from device."""
         if self.__ser is None:
-            logger.debug(
-                f"Serial instance not connected "
-                f"port={self.__port} "
-                f"baud_rate={self.__baud_rate} "
-                f"timeout={self.__timeout}"
-            )
+            if Serial_Connection_Log_Output:
+                logger.debug(
+                    f"Serial instance not connected "
+                    f"port={self.__port} "
+                    f"baud_rate={self.__baud_rate} "
+                    f"timeout={self.__timeout}"
+                )
             return
         else:
             if self.__ser.closed:
-                logger.debug(
-                    f"Serial port closed already no need do this again"
-                    f"port={self.__port} "
-                    f"baud_rate={self.__baud_rate} "
-                    f"timeout={self.__timeout}"
-                )
+                if Serial_Connection_Log_Output:
+                    logger.debug(
+                        f"Serial port closed already no need do this again"
+                        f"port={self.__port} "
+                        f"baud_rate={self.__baud_rate} "
+                        f"timeout={self.__timeout}"
+                    )
                 return
             else:
-                logger.debug(
-                    f"Device disconnect"
-                    f"port={self.__port} "
-                    f"baud_rate={self.__baud_rate} "
-                    f"timeout={self.__timeout}"
-                )
+                if Serial_Connection_Log_Output:
+                    logger.debug(
+                        f"Device disconnect"
+                        f"port={self.__port} "
+                        f"baud_rate={self.__baud_rate} "
+                        f"timeout={self.__timeout}"
+                    )
                 try:
                     self.__ser.close()
                 except Exception as e:
@@ -126,5 +135,6 @@ class SerialConnection:
                         f"timeout={self.__timeout} "
                         f"{e}"
                     )
-                logger.debug("Device disconnect success")
+                if Serial_Connection_Log_Output:
+                    logger.debug("Device disconnect success")
                 return
