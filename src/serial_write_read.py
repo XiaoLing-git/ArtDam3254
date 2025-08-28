@@ -1,4 +1,5 @@
 """SerialWriteRead."""
+
 import logging
 import time
 
@@ -13,6 +14,7 @@ class SerialWriteRead(SerialConnection):
     """
     SerialWriteRead
     """
+
     def write(self, cmd: str) -> None:
         """
         write cmd code

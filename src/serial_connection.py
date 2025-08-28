@@ -1,4 +1,5 @@
 """SerialConnect."""
+
 import logging
 
 from serial import EIGHTBITS, PARITY_NONE, STOPBITS_ONE, Serial
@@ -12,6 +13,7 @@ class SerialConnection:
     """
     SerialConnection
     """
+
     __slots__ = (
         "__port",
         "__baud_rate",

@@ -1,4 +1,5 @@
 """Utils."""
+
 import logging
 
 from .errors import DeviceAddressException, HexCodeException, ModBusCrc16Exception, RegisterAddressException
