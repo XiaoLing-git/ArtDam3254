@@ -20,22 +20,29 @@ class BaseCommandModel(Base_Model):
 
     Register_Address: str
 
-
-class InputReadCommand(BaseCommandModel):
-    """InputReadCommand."""
-
-    def __init__(self, /, **data: Any) -> None:
-        """InputReadCommand init."""
-        super().__init__(**data)
-        self.__generate_cmd()
-
-    Function_Code: FunctionCode = FunctionCode.InputRead
-    Register_Count: int
-
-    def __generate_cmd(self) -> str:
+    def _generate_cmd(self) -> str:
         """generate format Input Read Command"""
         assert_device_address(self.Device_Address)
         assert_function_code(self.Function_Code)
+        return ""
+
+    def __str__(self) -> str:
+        """__str__"""
+        return self._generate_cmd()
+
+    def __repr__(self) -> str:
+        """__repr__"""
+        return self._generate_cmd()
+
+
+class BaseReadCommand(BaseCommandModel):
+    """Base Read Command."""
+
+    Register_Count: int
+
+    def _generate_cmd(self) -> str:
+        """generate format Input Read Command"""
+        super()._generate_cmd()
         assert_register_address(self.Register_Address)
         cmd: str = (
             f"{self.Device_Address}"
@@ -47,16 +54,17 @@ class InputReadCommand(BaseCommandModel):
         cmd = cmd + self.Crc16
         return cmd
 
-    def __str__(self) -> str:
-        """__str__"""
-        return self.__generate_cmd()
+
+class InputReadCommand(BaseReadCommand):
+    """StateReadCommand."""
+
+    Function_Code: FunctionCode = FunctionCode.InputRead
 
 
-class StateReadCommand(BaseCommandModel):
+class StateReadCommand(BaseReadCommand):
     """StateReadCommand."""
 
     Function_Code: FunctionCode = FunctionCode.StateRead
-    Register_Count: int
 
 
 class SingleWriteCommand(BaseCommandModel):
