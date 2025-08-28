@@ -33,18 +33,12 @@ endif
 
 clean:clean_cache
 ifeq ($(DETECTED_OS),Windows)
-	if exist "$(CURRENT_DIR)build" ($(RMDIR) "$(CURRENT_DIR)build")
-	if exist "$(CURRENT_DIR)dist" ($(RMDIR) "$(CURRENT_DIR)dist")
-
 #	clean next level folder
 	@for %%d in ($(SUB_FOLDER)) do ( \
 		make -C "$(CURRENT_DIR)%%d" clean || exit 1; \
 	)
 
 else
-	$(RMDIR) "$(CURRENT_DIR)$(SEP)build"
-	$(RMDIR) "$(CURRENT_DIR)$(SEP)dist"
-
 #	clean next level folder
 	@for dir in $(SUB_FOLDER); do \
         make -C "$(CURRENT_DIR)$(SEP)$$dir" clean || exit 1; \

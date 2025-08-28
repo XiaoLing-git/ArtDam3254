@@ -60,7 +60,7 @@ install:
 	poetry install
 
 check:
-	pre-commit run
+	pre-commit run $(1)
 
 commit:clean
 	git add .
@@ -68,4 +68,3 @@ commit:clean
 
 push:commit
 	git push
-
