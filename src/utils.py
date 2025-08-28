@@ -12,6 +12,7 @@ from .errors import (
     SingleDataFormatError,
 )
 from .m_type import FunctionCode
+from .models import Modbus_Crc16_Log_Output
 
 logger = logging.getLogger(__name__)
 
@@ -101,7 +102,8 @@ def modbus_crc16(target: str) -> str:
         result: str = crc.to_bytes(2, byteorder="little").hex()
     except Exception as e:
         raise ModBusCrc16Exception(f"An exception occurred during calculation: {e}")
-    logger.debug(f"Crc16 Target: {target.upper()} Result: {result.upper()}")
+    if Modbus_Crc16_Log_Output:
+        logger.debug(f"Crc16 Target: {target.upper()} Result: {result.upper()}")
     return result.upper()
 
 

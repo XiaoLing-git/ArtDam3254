@@ -4,6 +4,10 @@ from pydantic import BaseModel
 
 from src.m_type import FunctionCode
 
+Serial_Write_Read_Log_Output: bool = True
+
+Modbus_Crc16_Log_Output: bool = False
+
 
 class Base_Model(BaseModel):  # type: ignore[misc]
     """

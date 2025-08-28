@@ -4,6 +4,7 @@ import logging
 import time
 
 from src.errors import SerialReadException, SerialWriteException
+from src.models import Serial_Write_Read_Log_Output
 from src.serial_connection import SerialConnection
 from src.utils import assert_hex_code, modbus_crc16
 
@@ -22,7 +23,8 @@ class SerialWriteRead(SerialConnection):
         :return:
         """
         assert_hex_code(cmd)
-        logger.debug(f"Write: {cmd}")
+        if Serial_Write_Read_Log_Output:
+            logger.debug(f"Write: {cmd}")
         try:
             self._ser.write(bytes.fromhex(cmd))
         except Exception as e:
@@ -37,7 +39,6 @@ class SerialWriteRead(SerialConnection):
                 response: str = self._ser.read(buffer_length).hex()
             except Exception as e:
                 raise SerialReadException(f"Serial Read Exception Happened {e}")
-            logger.debug(f" Read: {response.upper()}")
             return response.upper()
 
     def read_size(self, size: int, timeout: float) -> str:
@@ -83,4 +84,6 @@ class SerialWriteRead(SerialConnection):
             crc16: str = response[-4:]
             if modbus_crc16(content) == crc16:
                 break
+        if Serial_Write_Read_Log_Output:
+            logger.debug(f" Read: {response}")
         return response
