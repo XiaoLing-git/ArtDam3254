@@ -1,9 +1,20 @@
 """Command."""
 
+from __future__ import annotations
+
 from enum import Enum
 
 
-class FunctionCode(Enum):
+class BaseEnum(Enum):
+    """base Enum statement."""
+
+    @classmethod
+    def get_all_values(cls) -> list[BaseEnum]:
+        """get all enum instance."""
+        return list(cls.__members__.values())
+
+
+class FunctionCode(BaseEnum):
     """base function code statement."""
 
     InputRead = "04"
@@ -12,7 +23,7 @@ class FunctionCode(Enum):
     MultiWrite = "10"
 
 
-class AnalogChannelAddress(Enum):
+class AnalogChannelAddress(BaseEnum):
     """Analog channel read address."""
 
     all = "00000004"
@@ -22,7 +33,7 @@ class AnalogChannelAddress(Enum):
     ch4 = "00030001"
 
 
-class AnalogChannelRangeAddress(Enum):
+class AnalogChannelRangeAddress(BaseEnum):
     """Analog channel range read address."""
 
     all = "00C80004"
@@ -32,7 +43,7 @@ class AnalogChannelRangeAddress(Enum):
     ch4 = "00CB0001"
 
 
-class InputIoMode(Enum):
+class InputIoMode(BaseEnum):
     """Pin input IO mode options."""
 
     Normal = "01"
@@ -41,7 +52,7 @@ class InputIoMode(Enum):
     Count = "04"
 
 
-class OutputIoMode(Enum):
+class OutputIoMode(BaseEnum):
     """Pin output IO mode options."""
 
     Normal = "01"

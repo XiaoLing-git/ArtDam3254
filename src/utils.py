@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def assert_hex_code(target: str) -> None:
     """
-    assert target is hex code
+    assert target is hex code,
     :param target:
     :return:
     """

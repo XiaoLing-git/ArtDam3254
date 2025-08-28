@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT)
     CURRENT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 else
     DETECTED_OS := Linux
-    RM := rm -f
+    RM := rm -rf
     RMDIR := rm -rf
     MKDIR := mkdir -p
     EXE_EXT :=
