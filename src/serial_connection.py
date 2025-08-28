@@ -14,7 +14,12 @@ class SerialConnection:
     SerialConnection
     """
 
-    __slots__ = ("__port", "__baud_rate", "__timeout", "__ser", "__delay_time")
+    __slots__ = (
+        "__port",
+        "__baud_rate",
+        "__timeout",
+        "__ser",
+    )
 
     def __init__(self, port: str, baud_rate: int, timeout: float):
         """SerialConnection Init."""
@@ -22,15 +27,6 @@ class SerialConnection:
         self.__baud_rate = baud_rate
         self.__timeout = timeout
         self.__ser: Serial | None = None
-        self.__delay_time: float = 0.01
-
-    def set_delay(self, delay_time: float) -> None:
-        """
-        Setup delay time before read,
-        :param delay_time: unit = s
-        :return:
-        """
-        self.__delay_time = delay_time
 
     @property
     def _ser(self) -> Serial:

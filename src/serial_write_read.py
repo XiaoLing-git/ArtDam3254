@@ -39,8 +39,8 @@ class SerialWriteRead(SerialConnection):
                 response: str = self._ser.read(buffer_length).hex()
             except Exception as e:
                 raise SerialReadException(f"Serial Read Exception Happened {e}")
-            logger.debug(f" Read: {response}")
-            return response
+            logger.debug(f" Read: {response.upper()}")
+            return response.upper()
 
     def read_size(self, size: int, timeout: float) -> str:
         """
@@ -64,7 +64,7 @@ class SerialWriteRead(SerialConnection):
         logger.debug(f" ReadSize: Size = {current_size}, Response = {response}")
         return response
 
-    def read(self, timeout: float) -> str:
+    def read(self, timeout: float = 2) -> str:
         """
         Read until get something
         :param timeout:
@@ -72,14 +72,17 @@ class SerialWriteRead(SerialConnection):
         """
         time.sleep(0.1)
         start_time: float = time.time()
+        response: str = ""
         while True:
             duration: float = time.time() - start_time
+            _length: int = len(response)
             if duration > timeout:
-                response = None
+                raise SerialReadException(f"Serial read timeout, " f"Response = {response}, " f"Timeout={timeout}")
+            response = response + self.__read()
+            if _length < 4:
+                continue
+            content: str = response[:-4]
+            crc16: str = response[-4:]
+            if modbus_crc16(content) == crc16:
                 break
-            response = self.__read()
-            if len(response) > 0:
-                break
-        if response is None:
-            raise SerialReadException(f"Serial read timeout error  timeout={timeout}")
         return response

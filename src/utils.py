@@ -86,5 +86,5 @@ def modbus_crc16(target: str) -> str:
         result: str = crc.to_bytes(2, byteorder="little").hex()
     except Exception as e:
         raise ModBusCrc16Exception(f"An exception occurred during calculation: {e}")
-    logger.debug(f"Crc16 Target: {target} Result: {result}")
+    logger.debug(f"Crc16 Target: {target.upper()} Result: {result.upper()}")
     return result.upper()
