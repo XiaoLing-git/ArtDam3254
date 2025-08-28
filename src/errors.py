@@ -42,6 +42,12 @@ class DeviceAddressException(ArtException):
     """
 
 
+class SingleDataFormatError(ArtException):
+    """
+    Single Data Format Error.
+    """
+
+
 class FunctionCodeNotExistException(ArtException):
     """
     Function code  not exist Exception.

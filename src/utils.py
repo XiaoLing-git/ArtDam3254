@@ -9,6 +9,7 @@ from .errors import (
     HexCodeException,
     ModBusCrc16Exception,
     RegisterAddressException,
+    SingleDataFormatError,
 )
 from .m_type import FunctionCode
 
@@ -26,6 +27,19 @@ def assert_hex_code(target: str) -> None:
     for c in target:
         if c.upper() not in "0123456789ABCDEF":
             raise HexCodeException(f"char {c} can't not hex()")
+    return
+
+
+def assert_single_data(target: str) -> None:
+    """
+    assert single data format,
+    :param target:
+    :return:
+    """
+    assert_hex_code(target)
+
+    if len(target) != 4:
+        raise SingleDataFormatError(f"Single Data Str's Length should Be 4, Now = {len(target)}")
     return
 
 

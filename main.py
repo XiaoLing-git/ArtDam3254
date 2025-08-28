@@ -2,7 +2,7 @@
 
 from pprint import pprint
 
-from src.commands import FunctionCode, InputReadCommand, StateReadCommand
+from src.commands import FunctionCode, InputReadCommand, StateReadCommand, SingleWriteCommand, MultiWriteCommand
 from src.serial_write_read import SerialWriteRead
 from src.utils import assert_function_code, modbus_crc16, convert_register_length_to_hex
 
@@ -30,6 +30,20 @@ if __name__ == "__main__":
     ic = StateReadCommand(Device_Address="01",
                           Register_Address="0080",
                           Register_Count=7)
+    swr.write(str(ic))
+    res = swr.read(timeout=5)
+    print(res)
+
+    ic = SingleWriteCommand(Device_Address="01",
+                          Register_Address="0084",
+                          Data="0002")
+    swr.write(str(ic))
+    res = swr.read(timeout=5)
+    print(res)
+
+    ic = MultiWriteCommand(Device_Address="01",
+                            Register_Address="0084",
+                            Data="000200030000")
     swr.write(str(ic))
     res = swr.read(timeout=5)
     print(res)
