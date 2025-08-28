@@ -1,3 +1,4 @@
+"""SerialConnect."""
 import logging
 
 from serial import EIGHTBITS, PARITY_NONE, STOPBITS_ONE, Serial
@@ -8,6 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class SerialConnection:
+    """
+    SerialConnection
+    """
     __slots__ = (
         "__port",
         "__baud_rate",
@@ -16,6 +20,7 @@ class SerialConnection:
     )
 
     def __init__(self, port: str, baud_rate: int, timeout: float):
+        """SerialConnection Init."""
         self.__port = port
         self.__baud_rate = baud_rate
         self.__timeout = timeout

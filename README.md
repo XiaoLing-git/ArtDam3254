@@ -45,7 +45,7 @@ make commit msg="comments"
 make push msg="comments"
 ```
 
-### local check code
+### Local check code
 
 ```bash
 make check

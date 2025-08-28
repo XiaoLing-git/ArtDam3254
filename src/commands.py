@@ -1,3 +1,4 @@
+"""Command."""
 from enum import Enum
 
 

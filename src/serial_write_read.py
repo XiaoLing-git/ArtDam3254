@@ -1,3 +1,4 @@
+"""SerialWriteRead."""
 import logging
 import time
 
@@ -9,7 +10,9 @@ logger = logging.getLogger(__name__)
 
 
 class SerialWriteRead(SerialConnection):
-
+    """
+    SerialWriteRead
+    """
     def write(self, cmd: str) -> None:
         """
         write cmd code
