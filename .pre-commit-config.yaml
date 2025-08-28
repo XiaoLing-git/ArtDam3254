@@ -94,17 +94,6 @@ repos:
         # 仅检查 Python 文件
         files: \.py$
 
-#-   repo: https://github.com/cdce8p/python-typing-update    # 自动更新类型
-#    rev: v0.7.2
-#    hooks:
-#      - id: python-typing-update
-#        stages: [manual]
-#        args:
-#        - --py310-plus
-#        - --force
-#        - --keep-updates
-#        files: ^.+\.py$
-
 -   repo: https://github.com/codespell-project/codespell  # 检查拼写
     rev: v2.4.1
     hooks:
