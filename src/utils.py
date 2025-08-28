@@ -2,7 +2,6 @@
 
 import logging
 
-from .commands import FunctionCode
 from .errors import (
     DeviceAddressException,
     FunctionCodeNotExistException,
@@ -10,6 +9,7 @@ from .errors import (
     ModBusCrc16Exception,
     RegisterAddressException,
 )
+from .m_type import FunctionCode
 
 logger = logging.getLogger(__name__)
 
