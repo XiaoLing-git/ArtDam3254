@@ -42,6 +42,12 @@ class DeviceAddressException(ArtException):
     """
 
 
+class FunctionCodeNotExistException(ArtException):
+    """
+    Function code  not exist Exception.
+    """
+
+
 class RegisterAddressException(ArtException):
     """
     Register Address Exception.

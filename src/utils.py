@@ -2,7 +2,14 @@
 
 import logging
 
-from .errors import DeviceAddressException, HexCodeException, ModBusCrc16Exception, RegisterAddressException
+from .commands import FunctionCode
+from .errors import (
+    DeviceAddressException,
+    FunctionCodeNotExistException,
+    HexCodeException,
+    ModBusCrc16Exception,
+    RegisterAddressException,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +41,16 @@ def assert_device_address(target: str) -> None:
     except Exception as e:
         raise DeviceAddressException(f"{e}")
     return
+
+
+def assert_function_code(target: FunctionCode) -> None:
+    """
+    assert function code
+    :param target:
+    :return:
+    """
+    if not isinstance(target, FunctionCode):
+        raise FunctionCodeNotExistException(f"|{target}| Cannot be recognized as function code")
 
 
 def assert_register_address(target: str) -> None:
