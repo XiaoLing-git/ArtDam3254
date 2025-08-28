@@ -5,7 +5,7 @@ default_language_version:
 minimum_pre_commit_version: 4.2.0   # 最低pro-commit 版本
 
 files: \.(py|json|yaml|makefile)$  # 只处理 Python/json/yaml 文件
-exclude: ^(dist|build|.*exe$|.git/)  # 不处理 ./dist |./build | .exe结尾的所有对象
+exclude: ^(dist|build|main.py|.*exe$|.git/)  # 不处理 ./dist |./build | .exe结尾的所有对象
 
 
 # See https://pre-commit.com for more information

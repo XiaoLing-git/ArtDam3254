@@ -3,8 +3,11 @@
 from pprint import pprint
 
 from src.commands import FunctionCode
-from src.utils import assert_function_code
+from src.serial_write_read import SerialWriteRead
+from src.utils import assert_function_code, modbus_crc16
 
 if __name__ == "__main__":
-    assert_function_code(FunctionCode.InputRead)
-    # print(FunctionCode.get_all_values()[0].value)
+    swr = SerialWriteRead(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)
+    swr.write("010300800007")
+    res = swr.read(timeout=5)
+    print(res)

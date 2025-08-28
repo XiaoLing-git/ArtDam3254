@@ -70,6 +70,7 @@ class SerialWriteRead(SerialConnection):
         :param timeout:
         :return:
         """
+        time.sleep(0.1)
         start_time: float = time.time()
         while True:
             duration: float = time.time() - start_time
