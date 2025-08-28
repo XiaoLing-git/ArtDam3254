@@ -60,11 +60,7 @@ install:
 	poetry install
 
 check:
-	pre-commit run \
-	$(CURRENT_DIR)$(SEP)src \
-	$(CURRENT_DIR)$(SEP)test \
-	$(CURRENT_DIR)$(SEP)base_project \
-	$(CURRENT_DIR)$(SEP)*py
+	pre-commit run
 
 commit:clean
 	git add .
@@ -73,5 +69,3 @@ commit:clean
 push:commit
 	git push
 
-package:clean
-	$(RUN) pyinstaller .\main.spec
