@@ -4,7 +4,7 @@ import logging
 import time
 
 from src.errors import SerialReadException, SerialWriteException
-from src.models import Serial_Write_Read_Log_Output
+from src.models import Serial_Write_Read_Log_Clean_Output, Serial_Write_Read_Log_Output
 from src.serial_connection import SerialConnection
 from src.utils import assert_hex_code, modbus_crc16
 
@@ -86,4 +86,6 @@ class SerialWriteRead(SerialConnection):
                 break
         if Serial_Write_Read_Log_Output:
             logger.debug(f" Read: {response}")
+        if Serial_Write_Read_Log_Clean_Output:
+            logger.debug("-" * 100)
         return response

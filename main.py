@@ -22,30 +22,28 @@ if __name__ == "__main__":
     swr = SerialWriteRead(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)
     swr.connect()
 
-    # ic = InputReadCommand(Device_Address="01",
-    #                       Register_Address="0000",
-    #                       Register_Count=2)
-    #
-    # swr.write(str(ic))
-    # res = swr.read(timeout=5)
-    # print(res)
-    #
-    # ic = StateReadCommand(Device_Address="01",
-    #                       Register_Address="0080",
-    #                       Register_Count=7)
-    # swr.write(str(ic))
-    # res = swr.read(timeout=5)
-    # print(res)
+    ic = InputReadCommand(Device_Address="01",
+                          Register_Address="0000",
+                          Register_Count=2)
+
+    swr.write(str(ic))
+    res = swr.read(timeout=5)
+
+    ic = StateReadCommand(Device_Address="01",
+                          Register_Address="0080",
+                          Register_Count=7)
+    swr.write(str(ic))
+    res = swr.read(timeout=5)
 
     ic = SingleWriteCommand(Device_Address="01",
                           Register_Address="0084",
-                          Data="0002")
+                          Data="0001")
     swr.write(str(ic))
     res = swr.read(timeout=5)
 
     ic = MultiWriteCommand(Device_Address="01",
                             Register_Address="0084",
-                            Data="000200030000")
+                            Data="000100030000")
     swr.write(str(ic))
     res = swr.read(timeout=5)
     swr.disconnect()

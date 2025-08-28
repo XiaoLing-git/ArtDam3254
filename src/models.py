@@ -6,7 +6,9 @@ from src.m_type import FunctionCode
 
 Serial_Connection_Log_Output: bool = False
 
-Serial_Write_Read_Log_Output: bool = False
+Serial_Write_Read_Log_Output: bool = True
+
+Serial_Write_Read_Log_Clean_Output: bool = True
 
 Modbus_Crc16_Log_Output: bool = False
 
