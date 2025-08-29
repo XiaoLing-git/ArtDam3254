@@ -1,6 +1,6 @@
 """Main function entry, mainly used for debugging."""
 from src.base_driver import BaseDriver
-from src.m_type import AnalogChannel, DigitalInputMode
+from src.m_type import AnalogChannel, DigitalInputMode, AnalogInputRange
 from src.models import Serial_Write_Read_Log_Output,Modbus_Crc16_Log_Output
 
 
@@ -42,7 +42,10 @@ if __name__ == "__main__":
     res = swr.get_digital_output_1_mode()
     print(res)
 
+    res = swr.get_analog_channel_range(AnalogChannel.ch1)
+    print(res)
 
-
+    res = swr.set_analog_channel_range(AnalogChannel.ch1, AnalogInputRange.V_0__5)
+    print(res)
 
     swr.disconnect()

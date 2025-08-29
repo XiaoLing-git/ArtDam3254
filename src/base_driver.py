@@ -3,7 +3,15 @@
 import logging
 
 from src.commands import BaseReadCommand, BaseWriteCommand, InputReadCommand, SingleWriteCommand
-from src.m_type import AnalogChannel, AnalogChannelMapAddress, DigitalInputMode, DigitalOutputMode, FunctionCode
+from src.m_type import (
+    AnalogChannel,
+    AnalogChannelMapAddress,
+    AnalogChannelMapRangeAddress,
+    AnalogInputRange,
+    DigitalInputMode,
+    DigitalOutputMode,
+    FunctionCode,
+)
 from src.models import Base_Driver_Log_Output
 from src.register_address import Analog_Channel_Address, DI1_Work_Mode, DO1_Work_Mode
 from src.responses import BaseReadResponse, BaseResponseModel, MultiWritResponse, SingleWriteResponse
@@ -88,6 +96,37 @@ class BaseDriver(SerialWriteRead):
         chunk_size = 4
         response = self.get_response().Data
         return [int(response[i : i + chunk_size], 16) for i in range(0, len(response), chunk_size)]
+
+    def get_analog_channel_range(self, channel: AnalogChannel) -> AnalogInputRange:
+        """
+        get analog channel range
+        :param channel:
+        :return:
+        """
+        cmd = InputReadCommand(
+            Device_Address=self.__address,
+            Register_Address=register_map_value(AnalogChannelMapRangeAddress[channel]),
+            Register_Count=1,
+        )
+        self.send_command(cmd)
+        response = self.get_response()
+        return AnalogInputRange.map_value(response.Data)
+
+    def set_analog_channel_range(self, channel: AnalogChannel, mode: AnalogInputRange) -> AnalogInputRange:
+        """
+        set and get analog_channel_range
+        :param channel:
+        :param mode:
+        :return:
+        """
+        cmd = SingleWriteCommand(
+            Device_Address=self.__address,
+            Register_Address=register_map_value(AnalogChannelMapRangeAddress[channel]),
+            Data=fill_data(mode.value),
+        )
+        self.send_command(cmd)
+        response = self.get_response()
+        return AnalogInputRange.map_value(response.Data)
 
     def get_digital_input_1_mode(self) -> DigitalInputMode:
         """
