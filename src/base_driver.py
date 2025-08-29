@@ -2,7 +2,7 @@
 
 import logging
 
-from src.commands import BaseReadCommand, BaseWriteCommand, InputReadCommand, SingleWriteCommand
+from src.commands import BaseReadCommand, BaseWriteCommand, InputReadCommand, SingleWriteCommand, SwitchReadCommand
 from src.m_type import (
     AnalogChannel,
     AnalogChannelMapAddress,
@@ -11,9 +11,10 @@ from src.m_type import (
     DigitalInputMode,
     DigitalOutputMode,
     FunctionCode,
+    SwitchStatus,
 )
 from src.models import Base_Driver_Log_Output
-from src.register_address import Analog_Channel_Address, DI1_Work_Mode, DO1_Work_Mode
+from src.register_address import Analog_Channel_Address, DI1_Work_Mode, DI_1_Status, DO1_Work_Mode
 from src.responses import BaseReadResponse, BaseResponseModel, MultiWritResponse, SingleWriteResponse
 from src.serial_write_read import SerialWriteRead
 from src.utils import fill_data, register_map_value
@@ -181,3 +182,17 @@ class BaseDriver(SerialWriteRead):
         response = self.get_response()
         data: int = int(response.Data, 16)
         return DigitalOutputMode.map_value(data)
+
+    def get_digital_input_1_status(self) -> SwitchStatus:
+        """
+        get digital input 1 status
+        :return:
+        """
+        cmd = SwitchReadCommand(
+            Device_Address=self.__address,
+            Register_Address=DI_1_Status,
+            Register_Count=1,
+        )
+        self.send_command(cmd)
+        response = self.get_response()
+        return SwitchStatus.map_value(response.Data)

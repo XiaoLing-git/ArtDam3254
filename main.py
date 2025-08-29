@@ -37,15 +37,15 @@ if __name__ == "__main__":
     # res = swr.get_all_analog_channel_value()
     # print(res)
 
-    res = swr.get_digital_input_1_mode()
-    print(res)
-    res = swr.get_digital_output_1_mode()
-    print(res)
+    # res = swr.get_digital_input_1_mode()
+    # print(res)
+    # res = swr.get_digital_output_1_mode()
+    # print(res)
+    #
+    # res = swr.get_analog_channel_range(AnalogChannel.ch1)
+    # print(res)
 
-    res = swr.get_analog_channel_range(AnalogChannel.ch1)
-    print(res)
-
-    res = swr.set_analog_channel_range(AnalogChannel.ch1, AnalogInputRange.V_0__5)
+    res = swr.get_digital_input_1_status()
     print(res)
 
     swr.disconnect()

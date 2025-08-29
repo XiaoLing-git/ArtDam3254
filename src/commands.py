@@ -66,6 +66,12 @@ class BaseReadCommand(BaseCommandModel):
         return self.CMD
 
 
+class SwitchReadCommand(BaseReadCommand):
+    """SwitchReadCommand."""
+
+    Function_Code: FunctionCode = FunctionCode.SwitchRead
+
+
 class InputReadCommand(BaseReadCommand):
     """StateReadCommand."""
 

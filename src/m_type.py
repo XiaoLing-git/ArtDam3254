@@ -25,11 +25,11 @@ class BaseEnum(Enum):
 class FunctionCode(BaseEnum):
     """base function code statement."""
 
-    InputDetect = "02"
+    SwitchRead = "02"
     StateRead = "03"
     InputRead = "04"
     SingleWrite = "06"
-    OutputControl = "0F"
+    SwitchControl = "0F"
     MultiWrite = "10"
 
     @classmethod
@@ -141,6 +141,28 @@ class DigitalOutputMode(BaseEnum):
 
     @classmethod
     def map_value(cls, target: int) -> DigitalOutputMode:
+        """map value to enum instance."""
+        for item in cls.get_all_values():
+            if target == item.value:
+                return item
+        raise ModeNotExistException(f"{target} not existed in {cls.get_all_values()}")
+
+
+class SwitchStatus(BaseEnum):
+    """
+    SwitchStatus.
+    """
+
+    On = "01"
+    Off = "00"
+
+    @classmethod
+    def get_all_values(cls) -> list[SwitchStatus]:
+        """get all enum instance."""
+        return list(cls.__members__.values())
+
+    @classmethod
+    def map_value(cls, target: str) -> SwitchStatus:
         """map value to enum instance."""
         for item in cls.get_all_values():
             if target == item.value:
