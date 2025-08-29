@@ -4,6 +4,7 @@ from src.models import Serial_Write_Read_Log_Output,Modbus_Crc16_Log_Output
 
 
 from src.commands import FunctionCode, InputReadCommand, StateReadCommand, SingleWriteCommand, MultiWriteCommand
+from src.responses import BaseResponseModel, BaseReadResponse, SingleWriteResponse, MultiWritResponse
 from src.serial_write_read import SerialWriteRead
 from src.utils import assert_function_code, modbus_crc16, convert_register_length_to_hex
 
@@ -17,8 +18,6 @@ logging.basicConfig(
 
 if __name__ == "__main__":
 
-
-
     swr = SerialWriteRead(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)
     swr.connect()
 
@@ -27,23 +26,34 @@ if __name__ == "__main__":
                           Register_Count=2)
 
     swr.write(str(ic))
-    res = swr.read(timeout=5)
+    res = BaseReadResponse.response_to_model(swr.read(timeout=5))
+    print(res)
+
 
     ic = StateReadCommand(Device_Address="01",
                           Register_Address="0080",
                           Register_Count=7)
     swr.write(str(ic))
-    res = swr.read(timeout=5)
+    res = BaseReadResponse.response_to_model(swr.read(timeout=5))
+    print(res)
+
 
     ic = SingleWriteCommand(Device_Address="01",
                           Register_Address="0084",
                           Data="0001")
     swr.write(str(ic))
-    res = swr.read(timeout=5)
+
+    res = SingleWriteResponse.response_to_model(swr.read(timeout=5))
+    print(res)
+
 
     ic = MultiWriteCommand(Device_Address="01",
                             Register_Address="0084",
                             Data="000100030000")
     swr.write(str(ic))
-    res = swr.read(timeout=5)
+    res = MultiWritResponse.response_to_model(swr.read(timeout=5))
+    print(res)
+
+
+
     swr.disconnect()

@@ -13,6 +13,14 @@ class BaseEnum(Enum):
         """get all enum instance."""
         return list(cls.__members__.values())
 
+    @classmethod
+    def map_value(cls, target: str) -> BaseEnum:
+        """map value to enum instance."""
+        for item in FunctionCode.get_all_values():
+            if target == item.value:
+                return item
+        raise ValueError(f"{target} not existed in {cls.get_all_values()}")
+
 
 class FunctionCode(BaseEnum):
     """base function code statement."""
