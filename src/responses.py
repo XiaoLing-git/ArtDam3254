@@ -13,6 +13,13 @@ class BaseResponseModel(Base_Model):
     base command model
     """
 
+    def __str__(self) -> str:
+        """__str__"""
+        format_str = f"{self.__class__.__name__}("
+        for item in self.model_dump():
+            format_str = format_str + f"{item}={self.model_dump()[item]} "
+        return format_str.strip() + ")"
+
 
 class BaseReadResponse(BaseResponseModel):
     """Base Read Response for InputReadCommand & StateReadCommand."""

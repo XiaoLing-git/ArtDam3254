@@ -37,11 +37,10 @@ class BaseCommandModel(Base_Model):
 
     def __str__(self) -> str:
         """__str__"""
-        return self.CMD
-
-    def __repr__(self) -> str:
-        """__repr__"""
-        return self.CMD
+        format_str = f"{self.__class__.__name__}("
+        for item in self.model_dump():
+            format_str = format_str + f"{item}={self.model_dump()[item]} "
+        return format_str.strip() + ")"
 
 
 ####################################################################################

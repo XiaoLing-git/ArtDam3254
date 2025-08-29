@@ -1,5 +1,5 @@
 """Main function entry, mainly used for debugging."""
-
+from src.base_driver import BaseDriver
 from src.models import Serial_Write_Read_Log_Output,Modbus_Crc16_Log_Output
 
 
@@ -18,41 +18,36 @@ logging.basicConfig(
 
 if __name__ == "__main__":
 
-    swr = SerialWriteRead(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)
+    swr = BaseDriver(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)
     swr.connect()
 
     ic = InputReadCommand(Device_Address="01",
                           Register_Address="0000",
                           Register_Count=2)
 
-    swr.write(str(ic))
-    res = BaseReadResponse.response_to_model(swr.read(timeout=5))
-    print(res)
-
+    swr.send_command(ic)
+    res = swr.get_response()
 
     ic = StateReadCommand(Device_Address="01",
                           Register_Address="0080",
                           Register_Count=7)
-    swr.write(str(ic))
-    res = BaseReadResponse.response_to_model(swr.read(timeout=5))
-    print(res)
+    swr.send_command(ic)
+    res = swr.get_response()
 
 
     ic = SingleWriteCommand(Device_Address="01",
                           Register_Address="0084",
                           Data="0001")
-    swr.write(str(ic))
+    swr.send_command(ic)
 
-    res = SingleWriteResponse.response_to_model(swr.read(timeout=5))
-    print(res)
+    res = swr.get_response()
 
 
     ic = MultiWriteCommand(Device_Address="01",
                             Register_Address="0084",
                             Data="000100030000")
-    swr.write(str(ic))
-    res = MultiWritResponse.response_to_model(swr.read(timeout=5))
-    print(res)
+    swr.send_command(ic)
+    res = swr.get_response()
 
 
 

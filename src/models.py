@@ -6,11 +6,13 @@ from src.m_type import FunctionCode
 
 Serial_Connection_Log_Output: bool = False
 
-Serial_Write_Read_Log_Output: bool = True
+Serial_Write_Read_Log_Output: bool = False
 
-Serial_Write_Read_Log_Clean_Output: bool = True
+Serial_Write_Read_Log_Clean_Output: bool = False
 
 Modbus_Crc16_Log_Output: bool = False
+
+Base_Driver_Log_Output: bool = True
 
 
 class Base_Model(BaseModel):  # type: ignore[misc]

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from enum import Enum
 
+from src.errors import FunctionCodeNotExistException
+
 
 class BaseEnum(Enum):
     """base Enum statement."""
@@ -19,7 +21,7 @@ class BaseEnum(Enum):
         for item in FunctionCode.get_all_values():
             if target == item.value:
                 return item
-        raise ValueError(f"{target} not existed in {cls.get_all_values()}")
+        raise FunctionCodeNotExistException(f"{target} not existed in {cls.get_all_values()}")
 
 
 class FunctionCode(BaseEnum):
