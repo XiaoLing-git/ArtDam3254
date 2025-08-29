@@ -75,7 +75,29 @@ class DigitalInputMode(BaseEnum):
     @classmethod
     def map_value(cls, target: int) -> DigitalInputMode:
         """map value to enum instance."""
-        for item in DigitalInputMode.get_all_values():
+        for item in cls.get_all_values():
+            if target == item.value:
+                return item
+        raise ModeNotExistException(f"{target} not existed in {cls.get_all_values()}")
+
+
+class DigitalOutputMode(BaseEnum):
+    """Digital Signal Output Mode."""
+
+    Normal = 1
+    Low2HighDelay = 2
+    High2LowDelay = 3
+    Pulse = 4
+
+    @classmethod
+    def get_all_values(cls) -> list[DigitalOutputMode]:
+        """get all enum instance."""
+        return list(cls.__members__.values())
+
+    @classmethod
+    def map_value(cls, target: int) -> DigitalOutputMode:
+        """map value to enum instance."""
+        for item in cls.get_all_values():
             if target == item.value:
                 return item
         raise ModeNotExistException(f"{target} not existed in {cls.get_all_values()}")

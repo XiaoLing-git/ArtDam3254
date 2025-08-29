@@ -37,8 +37,11 @@ if __name__ == "__main__":
     # res = swr.get_all_analog_channel_value()
     # print(res)
 
-    res = swr.set_di_1_mode(DigitalInputMode.Normal)
+    res = swr.get_digital_input_1_mode()
     print(res)
+    res = swr.get_digital_output_1_mode()
+    print(res)
+
 
 
 
