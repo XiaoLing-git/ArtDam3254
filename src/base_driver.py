@@ -15,13 +15,21 @@ class BaseDriver(SerialWriteRead):
     """base driver for Art device"""
 
     def send_command(self, cmd: BaseReadCommand | BaseWriteCommand) -> None:
-        """send model command"""
+        """
+        send model command
+        :param cmd:
+        :return:
+        """
         if Base_Driver_Log_Output:
             logger.debug(cmd)
         self.write(cmd.CMD)
 
     def get_response(self, timeout: float = 2) -> BaseResponseModel:
-        """get mode; response"""
+        """
+        get model response
+        :param timeout:
+        :return:
+        """
         response: str = self.read(timeout=timeout)
         function_code = FunctionCode.map_value(response[2:4])
         if function_code is FunctionCode.SingleWrite:
