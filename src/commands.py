@@ -103,7 +103,7 @@ class SingleWriteCommand(BaseWriteCommand):
         """generate format Input write Command"""
         super()._generate_cmd()
         assert_single_data(self.Data)
-        cmd: str = f"{self.Device_Address}" f"{self.Function_Code.value}" f"{self.Register_Address}" f"{self.Data}"
+        cmd: str = f"{self.Device_Address}{self.Function_Code.value}{self.Register_Address}{self.Data}"
         self.Crc16 = modbus_crc16(cmd)
         self.CMD = cmd + self.Crc16
         return self.CMD

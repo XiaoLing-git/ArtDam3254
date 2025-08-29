@@ -25,9 +25,11 @@ class BaseEnum(Enum):
 class FunctionCode(BaseEnum):
     """base function code statement."""
 
-    InputRead = "04"
+    InputDetect = "02"
     StateRead = "03"
+    InputRead = "04"
     SingleWrite = "06"
+    OutputControl = "0F"
     MultiWrite = "10"
 
     @classmethod
