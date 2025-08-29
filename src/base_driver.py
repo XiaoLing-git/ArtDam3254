@@ -2,17 +2,33 @@
 
 import logging
 
-from src.commands import BaseReadCommand, BaseWriteCommand
-from src.m_type import FunctionCode
+from src.commands import BaseReadCommand, BaseWriteCommand, InputReadCommand, SingleWriteCommand
+from src.m_type import AnalogChannel, AnalogChannelMapAddress, DigitalInputMode, FunctionCode
 from src.models import Base_Driver_Log_Output
+from src.register_address import Analog_Channel_Address, DI1_Work_Mode
 from src.responses import BaseReadResponse, BaseResponseModel, MultiWritResponse, SingleWriteResponse
 from src.serial_write_read import SerialWriteRead
+from src.utils import fill_data, register_map_value
 
 logger = logging.getLogger(__name__)
 
 
 class BaseDriver(SerialWriteRead):
     """base driver for Art device"""
+
+    __slots__ = ("__address",)
+
+    def __init__(self, port: str, baud_rate: int, timeout: float, device_address: str):
+        """
+        Base Driver init
+        :param port:
+        :param baud_rate:
+        :param timeout:
+        :param device_address:
+        """
+        super().__init__(port, baud_rate, timeout)
+
+        self.__address = device_address
 
     def send_command(self, cmd: BaseReadCommand | BaseWriteCommand) -> None:
         """
@@ -41,3 +57,61 @@ class BaseDriver(SerialWriteRead):
         if Base_Driver_Log_Output:
             logger.debug(response_model)
         return response_model
+
+    def get_analog_channel_value(self, channel: AnalogChannel) -> int:
+        """
+        get target analog channel sample value
+        :param channel:
+        :return:
+        """
+        if channel is AnalogChannel.all:
+            raise ValueError("Wrong Args, Try use get_all_analog_channel_value")
+        else:
+            address: int = AnalogChannelMapAddress[channel]
+            cmd = InputReadCommand(
+                Device_Address=self.__address, Register_Address=register_map_value(address), Register_Count=1
+            )
+            self.send_command(cmd)
+            response = self.get_response()
+            data: int = int(response.Data, 16)
+            return data
+
+    def get_all_analog_channel_value(self) -> list[int]:
+        """
+        get all analog channel sample value
+        :return:
+        """
+        cmd = InputReadCommand(
+            Device_Address=self.__address, Register_Address=register_map_value(Analog_Channel_Address), Register_Count=4
+        )
+        self.send_command(cmd)
+        chunk_size = 4
+        response = self.get_response().Data
+        return [int(response[i : i + chunk_size], 16) for i in range(0, len(response), chunk_size)]
+
+    def get_di_1_mode(self) -> DigitalInputMode:
+        """
+        get digital input channel mode
+        :return:
+        """
+        cmd = InputReadCommand(
+            Device_Address=self.__address, Register_Address=register_map_value(DI1_Work_Mode), Register_Count=1
+        )
+        self.send_command(cmd)
+        response = self.get_response()
+        data: int = int(response.Data, 16)
+        return DigitalInputMode.map_value(data)
+
+    def set_di_1_mode(self, mode: DigitalInputMode) -> DigitalInputMode:
+        """
+        set and get digital input channel mode
+        :return:
+        """
+        hex_char: str = hex(mode.value).replace("0x", "")
+        cmd = SingleWriteCommand(
+            Device_Address=self.__address, Register_Address=register_map_value(DI1_Work_Mode), Data=fill_data(hex_char)
+        )
+        self.send_command(cmd)
+        response = self.get_response()
+        data: int = int(response.Data, 16)
+        return DigitalInputMode.map_value(data)

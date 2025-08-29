@@ -88,3 +88,9 @@ class SerialReadException(ArtException):
     """
     Device Serial Read Exception.
     """
+
+
+class ModeNotExistException(ArtException):
+    """
+    Mode  not exist Exception.
+    """

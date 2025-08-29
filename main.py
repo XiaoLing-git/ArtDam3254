@@ -1,5 +1,6 @@
 """Main function entry, mainly used for debugging."""
 from src.base_driver import BaseDriver
+from src.m_type import AnalogChannel, DigitalInputMode
 from src.models import Serial_Write_Read_Log_Output,Modbus_Crc16_Log_Output
 
 
@@ -18,36 +19,26 @@ logging.basicConfig(
 
 if __name__ == "__main__":
 
-    swr = BaseDriver(port="/dev/ttyUSB0",baud_rate=9600,timeout=5)
+    swr = BaseDriver(port="/dev/ttyUSB0",baud_rate=9600,timeout=5,device_address="01")
     swr.connect()
 
-    ic = InputReadCommand(Device_Address="01",
-                          Register_Address="0000",
-                          Register_Count=2)
+    # res = swr.get_analog_channel_value(AnalogChannel.ch1)
+    # print(res)
+    #
+    # res = swr.get_analog_channel_value(AnalogChannel.ch2)
+    # print(res)
+    #
+    # res = swr.get_analog_channel_value(AnalogChannel.ch3)
+    # print(res)
+    #
+    # res = swr.get_analog_channel_value(AnalogChannel.ch4)
+    # print(res)
+    #
+    # res = swr.get_all_analog_channel_value()
+    # print(res)
 
-    swr.send_command(ic)
-    res = swr.get_response()
-
-    ic = StateReadCommand(Device_Address="01",
-                          Register_Address="0080",
-                          Register_Count=7)
-    swr.send_command(ic)
-    res = swr.get_response()
-
-
-    ic = SingleWriteCommand(Device_Address="01",
-                          Register_Address="0084",
-                          Data="0001")
-    swr.send_command(ic)
-
-    res = swr.get_response()
-
-
-    ic = MultiWriteCommand(Device_Address="01",
-                            Register_Address="0084",
-                            Data="000100030000")
-    swr.send_command(ic)
-    res = swr.get_response()
+    res = swr.set_di_1_mode(DigitalInputMode.Normal)
+    print(res)
 
 
 

@@ -124,3 +124,29 @@ def convert_register_length_to_hex(_length: int) -> str:
             break
         hex_char = "0" + hex_char
     return hex_char.upper()
+
+
+def register_map_value(address: int) -> str:
+    """
+    register map value
+    :param address:
+    :return:
+    """
+    return convert_register_length_to_hex(address - 40001)
+
+
+def fill_data(target: str, _length: int = 4) -> str:
+    """
+    fill data
+    :param target:
+    :param _length:
+    :return:
+    """
+    if len(target) > _length:
+        raise ValueError(f"Current length of {target} great than {_length}")
+    start_time: float = time.time()
+    while len(target) != _length:
+        if time.time() - start_time > 1:
+            break
+        target = "0" + target
+    return target
