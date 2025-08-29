@@ -29,7 +29,7 @@ class FunctionCode(BaseEnum):
     StateRead = "03"
     InputRead = "04"
     SingleWrite = "06"
-    SwitchControl = "0F"
+    SetupWrite = "0F"
     MultiWrite = "10"
 
     @classmethod
@@ -104,7 +104,7 @@ AnalogInputRangeMapValue: dict[AnalogInputRange, tuple[float, float, str]] = {
 }
 
 
-class DigitalInputMode(BaseEnum):
+class DigitalInputWorkMode(BaseEnum):
     """Digital Signal Input Mode."""
 
     Normal = 1
@@ -113,12 +113,12 @@ class DigitalInputMode(BaseEnum):
     Counter = 4
 
     @classmethod
-    def get_all_values(cls) -> list[DigitalInputMode]:
+    def get_all_values(cls) -> list[DigitalInputWorkMode]:
         """get all enum instance."""
         return list(cls.__members__.values())
 
     @classmethod
-    def map_value(cls, target: int) -> DigitalInputMode:
+    def map_value(cls, target: int) -> DigitalInputWorkMode:
         """map value to enum instance."""
         for item in cls.get_all_values():
             if target == item.value:

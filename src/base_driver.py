@@ -8,7 +8,7 @@ from src.m_type import (
     AnalogChannelMapAddress,
     AnalogChannelMapRangeAddress,
     AnalogInputRange,
-    DigitalInputMode,
+    DigitalInputWorkMode,
     DigitalOutputMode,
     FunctionCode,
     SwitchStatus,
@@ -129,7 +129,7 @@ class BaseDriver(SerialWriteRead):
         response = self.get_response()
         return AnalogInputRange.map_value(response.Data)
 
-    def get_digital_input_1_mode(self) -> DigitalInputMode:
+    def get_digital_input_1_mode(self) -> DigitalInputWorkMode:
         """
         get digital input channel mode
         :return:
@@ -140,11 +140,11 @@ class BaseDriver(SerialWriteRead):
         self.send_command(cmd)
         response = self.get_response()
         data: int = int(response.Data, 16)
-        return DigitalInputMode.map_value(data)
+        return DigitalInputWorkMode.map_value(data)
 
-    def set_digital_input_1_mode(self, mode: DigitalInputMode) -> DigitalInputMode:
+    def set_digital_input_1_work_mode(self, mode: DigitalInputWorkMode) -> DigitalInputWorkMode:
         """
-        set and get digital input channel mode
+        set and get digital input channel work mode
         :return:
         """
         hex_char: str = hex(mode.value).replace("0x", "")
@@ -154,7 +154,7 @@ class BaseDriver(SerialWriteRead):
         self.send_command(cmd)
         response = self.get_response()
         data: int = int(response.Data, 16)
-        return DigitalInputMode.map_value(data)
+        return DigitalInputWorkMode.map_value(data)
 
     def get_digital_output_1_mode(self) -> DigitalOutputMode:
         """

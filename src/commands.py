@@ -104,12 +104,42 @@ class SingleWriteCommand(BaseWriteCommand):
     """SingleWriteCommand."""
 
     Function_Code: FunctionCode = FunctionCode.SingleWrite
+    Register_Count: str = "01"
 
     def _generate_cmd(self) -> str:
         """generate format Input write Command"""
         super()._generate_cmd()
         assert_single_data(self.Data)
-        cmd: str = f"{self.Device_Address}{self.Function_Code.value}{self.Register_Address}{self.Data}"
+        cmd: str = (
+            f"{self.Device_Address}"
+            f"{self.Function_Code.value}"
+            f"{self.Register_Address}"
+            f"{self.Register_Count}"
+            f"{self.Data}"
+        )
+        self.Crc16 = modbus_crc16(cmd)
+        self.CMD = cmd + self.Crc16
+        return self.CMD
+
+
+class SetupWriteCommand(BaseWriteCommand):
+    """SetupWriteCommand."""
+
+    Function_Code: FunctionCode = FunctionCode.SetupWrite
+    Register_Count: str = "01"
+    Byte_Count: str = "01"
+
+    def _generate_cmd(self) -> str:
+        """generate format Input write Command"""
+        super()._generate_cmd()
+        assert_single_data(self.Data)
+        cmd: str = (
+            f"{self.Device_Address}"
+            f"{self.Function_Code.value}"
+            f"{self.Register_Count}"
+            f"{self.Byte_Count}"
+            f"{self.Data}"
+        )
         self.Crc16 = modbus_crc16(cmd)
         self.CMD = cmd + self.Crc16
         return self.CMD
