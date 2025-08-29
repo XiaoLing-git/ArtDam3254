@@ -6,6 +6,7 @@ import time
 from .m_type import FunctionCode
 from .models import Base_Model
 from .utils import (
+    assert_1_byte_data,
     assert_device_address,
     assert_function_code,
     assert_register_address,
@@ -132,10 +133,11 @@ class SetupWriteCommand(BaseWriteCommand):
     def _generate_cmd(self) -> str:
         """generate format Input write Command"""
         super()._generate_cmd()
-        assert_single_data(self.Data)
+        assert_1_byte_data(self.Data)
         cmd: str = (
             f"{self.Device_Address}"
             f"{self.Function_Code.value}"
+            f"{self.Register_Address}"
             f"{self.Register_Count}"
             f"{self.Byte_Count}"
             f"{self.Data}"

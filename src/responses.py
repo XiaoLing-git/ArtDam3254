@@ -64,13 +64,35 @@ class SingleWriteResponse(BaseResponseModel):
         return cls(**results)
 
 
-class MultiWritResponse(BaseResponseModel):
+class SetupWriteResponse(BaseResponseModel):
     """Response for MultiWriteCommand."""
 
     Register_Count: int
 
     @classmethod
-    def response_to_model(cls, bytes_response: str) -> MultiWritResponse:
+    def response_to_model(cls, bytes_response: str) -> SetupWriteResponse:
+        """
+        parse str to model.
+        :param bytes_response:
+        :return:
+        """
+        results: dict[str, Any] = {
+            "Device_Address": bytes_response[:2],
+            "Function_Code": FunctionCode.map_value(bytes_response[2:4]),
+            "Register_Address": bytes_response[4:8],
+            "Register_Count": int(bytes_response[8:-4], 16),
+            "Crc16": bytes_response[-4:],
+        }
+        return cls(**results)
+
+
+class MultiWriteResponse(BaseResponseModel):
+    """Response for MultiWriteCommand."""
+
+    Register_Count: int
+
+    @classmethod
+    def response_to_model(cls, bytes_response: str) -> MultiWriteResponse:
         """
         parse str to model.
         :param bytes_response:

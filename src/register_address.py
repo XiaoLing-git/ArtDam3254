@@ -69,7 +69,7 @@ DI_1_Counter_Switch: int = 697
 # DI0 过滤使能
 DI_1_OverFlow_Flag: int = 729
 
-DI_1_Status: str = "0000"
+DI_1_Input_Status: str = "0000"
 
 
 Device_Model: int = 40129

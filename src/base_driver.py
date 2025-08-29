@@ -2,7 +2,14 @@
 
 import logging
 
-from src.commands import BaseReadCommand, BaseWriteCommand, InputReadCommand, SingleWriteCommand, SwitchReadCommand
+from src.commands import (
+    BaseReadCommand,
+    BaseWriteCommand,
+    InputReadCommand,
+    SetupWriteCommand,
+    SingleWriteCommand,
+    SwitchReadCommand,
+)
 from src.m_type import (
     AnalogChannel,
     AnalogChannelMapAddress,
@@ -10,12 +17,19 @@ from src.m_type import (
     AnalogInputRange,
     DigitalInputWorkMode,
     DigitalOutputMode,
+    DigitalOutputWorkMode,
     FunctionCode,
     SwitchStatus,
 )
 from src.models import Base_Driver_Log_Output
-from src.register_address import Analog_Channel_Address, DI1_Work_Mode, DI_1_Status, DO1_Work_Mode
-from src.responses import BaseReadResponse, BaseResponseModel, MultiWritResponse, SingleWriteResponse
+from src.register_address import Analog_Channel_Address, DI1_Work_Mode, DI_1_Input_Status, DO1_Work_Mode
+from src.responses import (
+    BaseReadResponse,
+    BaseResponseModel,
+    MultiWriteResponse,
+    SetupWriteResponse,
+    SingleWriteResponse,
+)
 from src.serial_write_read import SerialWriteRead
 from src.utils import fill_data, register_map_value
 
@@ -60,7 +74,11 @@ class BaseDriver(SerialWriteRead):
         if function_code is FunctionCode.SingleWrite:
             response_model = SingleWriteResponse.response_to_model(response)
         elif function_code is FunctionCode.MultiWrite:
-            response_model = MultiWritResponse.response_to_model(response)
+            response_model = MultiWriteResponse.response_to_model(response)
+
+        elif function_code is FunctionCode.SetupWrite:
+            response_model = SetupWriteResponse.response_to_model(response)
+
         else:
             response_model = BaseReadResponse.response_to_model(response)
         if Base_Driver_Log_Output:
@@ -129,7 +147,7 @@ class BaseDriver(SerialWriteRead):
         response = self.get_response()
         return AnalogInputRange.map_value(response.Data)
 
-    def get_digital_input_1_mode(self) -> DigitalInputWorkMode:
+    def get_digital_input_1_work_mode(self) -> DigitalInputWorkMode:
         """
         get digital input channel mode
         :return:
@@ -156,7 +174,7 @@ class BaseDriver(SerialWriteRead):
         data: int = int(response.Data, 16)
         return DigitalInputWorkMode.map_value(data)
 
-    def get_digital_output_1_mode(self) -> DigitalOutputMode:
+    def get_digital_output_1_work_mode(self) -> DigitalOutputWorkMode:
         """
         get digital output channel mode
         :return:
@@ -167,9 +185,9 @@ class BaseDriver(SerialWriteRead):
         self.send_command(cmd)
         response = self.get_response()
         data: int = int(response.Data, 16)
-        return DigitalOutputMode.map_value(data)
+        return DigitalOutputWorkMode.map_value(data)
 
-    def set_digital_output_1_mode(self, mode: DigitalOutputMode) -> DigitalOutputMode:
+    def set_digital_output_1_mode(self, mode: DigitalOutputWorkMode) -> DigitalOutputWorkMode:
         """
         set and get digital output channel mode
         :return:
@@ -181,7 +199,7 @@ class BaseDriver(SerialWriteRead):
         self.send_command(cmd)
         response = self.get_response()
         data: int = int(response.Data, 16)
-        return DigitalOutputMode.map_value(data)
+        return DigitalOutputWorkMode.map_value(data)
 
     def get_digital_input_1_status(self) -> SwitchStatus:
         """
@@ -190,9 +208,22 @@ class BaseDriver(SerialWriteRead):
         """
         cmd = SwitchReadCommand(
             Device_Address=self.__address,
-            Register_Address=DI_1_Status,
+            Register_Address=DI_1_Input_Status,
             Register_Count=1,
         )
         self.send_command(cmd)
         response = self.get_response()
         return SwitchStatus.map_value(response.Data)
+
+    def set_digital_output_1_status(self, status: SwitchStatus, mode: DigitalOutputMode) -> BaseResponseModel:
+        """
+        set digital output 1 status
+        :param status:
+        :param mode:
+        :return:
+        """
+        cmd = SetupWriteCommand(
+            Device_Address=self.__address, Register_Address=fill_data(mode.value), Data=status.value
+        )
+        self.send_command(cmd)
+        return self.get_response()

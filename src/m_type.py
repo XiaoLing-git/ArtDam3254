@@ -107,6 +107,7 @@ AnalogInputRangeMapValue: dict[AnalogInputRange, tuple[float, float, str]] = {
 class DigitalInputWorkMode(BaseEnum):
     """Digital Signal Input Mode."""
 
+    Unknown = 0
     Normal = 1
     Low2HighLatch = 2
     High2LowLatch = 3
@@ -126,7 +127,7 @@ class DigitalInputWorkMode(BaseEnum):
         raise ModeNotExistException(f"{target} not existed in {cls.get_all_values()}")
 
 
-class DigitalOutputMode(BaseEnum):
+class DigitalOutputWorkMode(BaseEnum):
     """Digital Signal Output Mode."""
 
     Normal = 1
@@ -135,17 +136,24 @@ class DigitalOutputMode(BaseEnum):
     Pulse = 4
 
     @classmethod
-    def get_all_values(cls) -> list[DigitalOutputMode]:
+    def get_all_values(cls) -> list[DigitalOutputWorkMode]:
         """get all enum instance."""
         return list(cls.__members__.values())
 
     @classmethod
-    def map_value(cls, target: int) -> DigitalOutputMode:
+    def map_value(cls, target: int) -> DigitalOutputWorkMode:
         """map value to enum instance."""
         for item in cls.get_all_values():
             if target == item.value:
                 return item
         raise ModeNotExistException(f"{target} not existed in {cls.get_all_values()}")
+
+
+class DigitalOutputMode(BaseEnum):
+    """Digital Signal Output Mode."""
+
+    Normal = "0000"
+    Engage = "0020"
 
 
 class SwitchStatus(BaseEnum):

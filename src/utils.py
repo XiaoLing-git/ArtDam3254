@@ -44,6 +44,19 @@ def assert_single_data(target: str) -> None:
     return
 
 
+def assert_1_byte_data(target: str) -> None:
+    """
+    assert single data format,
+    :param target:
+    :return:
+    """
+    assert_hex_code(target)
+
+    if len(target) != 2:
+        raise SingleDataFormatError(f"Single Data Str's Length should Be 2, Now = {len(target)}")
+    return
+
+
 def assert_device_address(target: str) -> None:
     """
     assert device address format
