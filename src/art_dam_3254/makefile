@@ -19,7 +19,7 @@ endif
 
 
 RUN := poetry run
-SUB_FOLDER := art_dam_3254
+SUB_FOLDER :=
 
 
 clean_cache:
