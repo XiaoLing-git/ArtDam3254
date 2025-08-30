@@ -4,8 +4,8 @@ import logging
 
 from serial import EIGHTBITS, PARITY_NONE, STOPBITS_ONE, Serial
 
-from .errors import DeviceConnectionException, DeviceReconnectionException
-from .models import Serial_Connection_Log_Output
+from ..errors import DeviceConnectionException, DeviceReconnectionException
+from ..models.common import Serial_Connection_Log_Output
 
 logger = logging.getLogger(__name__)
 

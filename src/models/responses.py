@@ -4,13 +4,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from src.m_type import FunctionCode
-from src.models import Base_Model
+from .common import Base_Model
+from .m_type import FunctionCode
 
 
 class BaseResponseModel(Base_Model):
     """
-    base command model
+    base command models
     """
 
     def __str__(self) -> str:
@@ -29,7 +29,7 @@ class BaseReadResponse(BaseResponseModel):
 
     @classmethod
     def response_to_model(cls, bytes_response: str) -> BaseReadResponse:
-        """parse str to model."""
+        """parse str to models."""
         results: dict[str, Any] = {
             "Device_Address": bytes_response[:2],
             "Function_Code": FunctionCode.map_value(bytes_response[2:4]),
@@ -53,7 +53,7 @@ class SingleWriteResponse(BaseResponseModel):
 
     @classmethod
     def response_to_model(cls, bytes_response: str) -> SingleWriteResponse:
-        """parse str to model."""
+        """parse str to models."""
         results: dict[str, Any] = {
             "Device_Address": bytes_response[:2],
             "Function_Code": FunctionCode.map_value(bytes_response[2:4]),
@@ -72,7 +72,7 @@ class SetupWriteResponse(BaseResponseModel):
     @classmethod
     def response_to_model(cls, bytes_response: str) -> SetupWriteResponse:
         """
-        parse str to model.
+        parse str to models.
         :param bytes_response:
         :return:
         """
@@ -94,7 +94,7 @@ class MultiWriteResponse(BaseResponseModel):
     @classmethod
     def response_to_model(cls, bytes_response: str) -> MultiWriteResponse:
         """
-        parse str to model.
+        parse str to models.
         :param bytes_response:
         :return:
         """

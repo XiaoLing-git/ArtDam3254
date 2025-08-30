@@ -1,8 +1,8 @@
-"""model."""
+"""models."""
 
 from pydantic import BaseModel
 
-from src.m_type import FunctionCode
+from .m_type import FunctionCode
 
 Serial_Connection_Log_Output: bool = False
 

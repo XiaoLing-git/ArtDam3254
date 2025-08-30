@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from enum import Enum
 
-from src.errors import FunctionCodeNotExistException, ModeNotExistException
-from src.register_address import (
+from ..const import (
     Analog_Channel_1_Address,
     Analog_Channel_1_Range,
     Analog_Channel_2_Address,
@@ -16,6 +15,7 @@ from src.register_address import (
     Analog_Channel_4_Range,
     Analog_Channel_Address,
 )
+from ..errors import FunctionCodeNotExistException, ModeNotExistException
 
 
 class BaseEnum(Enum):

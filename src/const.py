@@ -1,4 +1,4 @@
-"""register_address.py"""
+"""const.py"""
 
 Analog_Channel_Address: int = 40001
 # 第 0 路模拟量采集值

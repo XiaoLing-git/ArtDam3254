@@ -2,7 +2,8 @@
 
 import logging
 
-from src.commands import (
+from ..const import Analog_Channel_Address, DI1_Work_Mode, DI_1_Input_Status, DO1_Work_Mode
+from ..models.commands import (
     BaseReadCommand,
     BaseWriteCommand,
     InputReadCommand,
@@ -10,7 +11,8 @@ from src.commands import (
     SingleWriteCommand,
     SwitchReadCommand,
 )
-from src.m_type import (
+from ..models.common import Base_Driver_Log_Output
+from ..models.m_type import (
     AnalogChannel,
     AnalogChannelMapAddress,
     AnalogChannelMapRangeAddress,
@@ -21,17 +23,15 @@ from src.m_type import (
     FunctionCode,
     SwitchStatus,
 )
-from src.models import Base_Driver_Log_Output
-from src.register_address import Analog_Channel_Address, DI1_Work_Mode, DI_1_Input_Status, DO1_Work_Mode
-from src.responses import (
+from ..models.responses import (
     BaseReadResponse,
     BaseResponseModel,
     MultiWriteResponse,
     SetupWriteResponse,
     SingleWriteResponse,
 )
-from src.serial_write_read import SerialWriteRead
-from src.utils import fill_data, register_map_value
+from ..utils.serial_write_read import SerialWriteRead
+from ..utils.utils import fill_data, register_map_value
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +55,7 @@ class BaseDriver(SerialWriteRead):
 
     def send_command(self, cmd: BaseReadCommand | BaseWriteCommand) -> None:
         """
-        send model command
+        send models command
         :param cmd:
         :return:
         """
@@ -65,7 +65,7 @@ class BaseDriver(SerialWriteRead):
 
     def get_response(self, timeout: float = 2) -> BaseResponseModel:
         """
-        get model response
+        get models response
         :param timeout:
         :return:
         """

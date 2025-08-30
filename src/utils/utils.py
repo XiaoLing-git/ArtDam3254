@@ -3,16 +3,14 @@
 import logging
 import time
 
-from .errors import (
+from ..errors import (
     DeviceAddressException,
-    FunctionCodeNotExistException,
     HexCodeException,
     ModBusCrc16Exception,
     RegisterAddressException,
     SingleDataFormatError,
 )
-from .m_type import FunctionCode
-from .models import Modbus_Crc16_Log_Output
+from ..models.common import Modbus_Crc16_Log_Output
 
 logger = logging.getLogger(__name__)
 
@@ -70,16 +68,6 @@ def assert_device_address(target: str) -> None:
     except Exception as e:
         raise DeviceAddressException(f"{e}")
     return
-
-
-def assert_function_code(target: FunctionCode) -> None:
-    """
-    assert function code
-    :param target:
-    :return:
-    """
-    if not isinstance(target, FunctionCode):
-        raise FunctionCodeNotExistException(f"|{target}| Cannot be recognized as function code")
 
 
 def assert_register_address(target: str) -> None:

@@ -3,10 +3,10 @@
 import logging
 import time
 
-from src.errors import SerialReadException, SerialWriteException
-from src.models import Serial_Write_Read_Log_Clean_Output, Serial_Write_Read_Log_Output
-from src.serial_connection import SerialConnection
-from src.utils import assert_hex_code, modbus_crc16
+from ..errors import SerialReadException, SerialWriteException
+from ..models.common import Serial_Write_Read_Log_Clean_Output, Serial_Write_Read_Log_Output
+from .serial_connection import SerialConnection
+from .utils import assert_hex_code, modbus_crc16
 
 logger = logging.getLogger(__name__)
 

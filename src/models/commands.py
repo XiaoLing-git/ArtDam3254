@@ -3,37 +3,35 @@
 import logging
 import time
 
-from .m_type import FunctionCode
-from .models import Base_Model
-from .utils import (
+from ..utils.utils import (
     assert_1_byte_data,
     assert_device_address,
-    assert_function_code,
     assert_register_address,
     assert_single_data,
     convert_register_length_to_hex,
     modbus_crc16,
 )
+from .common import Base_Model
+from .m_type import FunctionCode
 
 logger = logging.getLogger(__name__)
 
 
 class BaseCommandModel(Base_Model):
     """
-    base command model
+    base command models
     """
 
     Register_Address: str
     CMD: str = ""
 
     def model_post_init(self, __context: None) -> None:
-        """model post init"""
+        """models post init"""
         self._generate_cmd()
 
     def _generate_cmd(self) -> str:
         """generate format Input Read Command"""
         assert_device_address(self.Device_Address)
-        assert_function_code(self.Function_Code)
         return ""
 
     def __str__(self) -> str:
