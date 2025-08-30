@@ -2,8 +2,8 @@
 
 import logging
 
-from src.art_dam_3254.driver import BaseDriver
-from src.art_dam_3254.models import AnalogChannel, SwitchStatus, DigitalOutputMode
+from art_dam_3254.driver import BaseDriver
+from art_dam_3254.models import AnalogChannel, SwitchStatus, DigitalOutputMode
 
 logging.basicConfig(
     level=logging.DEBUG,  # 核心：设置最低日志级别为DEBUG
