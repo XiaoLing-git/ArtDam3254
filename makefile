@@ -60,6 +60,10 @@ shell:
 install:
 	poetry install
 
+build:clean
+	poetry run python package.py
+	poetry build
+
 check:
 	$(PRECOMMIT) $(target)
 

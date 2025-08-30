@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "Art-Dam-3254"
-version = "0.1.0"
+name = "Art-Dam-3254_linux"
+version = "1.0.0"
 description = "python support for ART DAM3254"
 authors = ["xiaoling <samuel.ling.xiao@qq.com>"]
 readme = "README.md"
