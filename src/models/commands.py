@@ -3,7 +3,7 @@
 import logging
 import time
 
-from ..utils.utils import (
+from ..utils import (
     assert_1_byte_data,
     assert_device_address,
     assert_register_address,

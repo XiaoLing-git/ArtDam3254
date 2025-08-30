@@ -3,35 +3,30 @@
 import logging
 
 from ..const import Analog_Channel_Address, DI1_Work_Mode, DI_1_Input_Status, DO1_Work_Mode
-from ..models.commands import (
-    BaseReadCommand,
-    BaseWriteCommand,
-    InputReadCommand,
-    SetupWriteCommand,
-    SingleWriteCommand,
-    SwitchReadCommand,
-)
-from ..models.common import Base_Driver_Log_Output
-from ..models.m_type import (
+from ..models import (
     AnalogChannel,
     AnalogChannelMapAddress,
     AnalogChannelMapRangeAddress,
     AnalogInputRange,
+    Base_Driver_Log_Output,
+    BaseReadCommand,
+    BaseReadResponse,
+    BaseResponseModel,
+    BaseWriteCommand,
     DigitalInputWorkMode,
     DigitalOutputMode,
     DigitalOutputWorkMode,
     FunctionCode,
+    InputReadCommand,
+    MultiWriteResponse,
+    SetupWriteCommand,
+    SetupWriteResponse,
+    SingleWriteCommand,
+    SingleWriteResponse,
+    SwitchReadCommand,
     SwitchStatus,
 )
-from ..models.responses import (
-    BaseReadResponse,
-    BaseResponseModel,
-    MultiWriteResponse,
-    SetupWriteResponse,
-    SingleWriteResponse,
-)
-from ..utils.serial_write_read import SerialWriteRead
-from ..utils.utils import fill_data, register_map_value
+from ..utils import SerialWriteRead, fill_data, register_map_value
 
 logger = logging.getLogger(__name__)
 
