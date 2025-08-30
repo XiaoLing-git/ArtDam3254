@@ -1,6 +1,6 @@
 """Main function entry, mainly used for debugging."""
 from src.driver.base_driver import BaseDriver
-from src.models.m_type import DigitalOutputMode, SwitchStatus
+from src.models import DigitalOutputMode, SwitchStatus, AnalogChannel
 
 import logging
 
@@ -15,31 +15,29 @@ if __name__ == "__main__":
     swr = BaseDriver(port="/dev/ttyUSB0",baud_rate=9600,timeout=5,device_address="01")
     swr.connect()
 
-    # res = swr.get_analog_channel_value(AnalogChannel.ch1)
-    # print(res)
-    #
-    # res = swr.get_analog_channel_value(AnalogChannel.ch2)
-    # print(res)
-    #
-    # res = swr.get_analog_channel_value(AnalogChannel.ch3)
-    # print(res)
-    #
-    # res = swr.get_analog_channel_value(AnalogChannel.ch4)
-    # print(res)
-    #
-    # res = swr.get_all_analog_channel_value()
-    # print(res)
+    res = swr.get_analog_channel_value(AnalogChannel.ch1)
+    print(res)
 
-    # res = swr.get_digital_input_1_work_mode()
-    # print(res)
-    # res = swr.get_digital_output_1_mode()
-    # print(res)
-    #
-    # res = swr.get_analog_channel_range(AnalogChannel.ch1)
-    # print(res)
+    res = swr.get_analog_channel_value(AnalogChannel.ch2)
+    print(res)
 
-    # res = swr.get_digital_input_1_status()
-    # print(res)
+    res = swr.get_analog_channel_value(AnalogChannel.ch3)
+    print(res)
+
+    res = swr.get_analog_channel_value(AnalogChannel.ch4)
+    print(res)
+
+    res = swr.get_all_analog_channel_value()
+    print(res)
+
+    res = swr.get_digital_input_1_work_mode()
+    print(res)
+
+    res = swr.get_analog_channel_range(AnalogChannel.ch1)
+    print(res)
+
+    res = swr.get_digital_input_1_status()
+    print(res)
 
     res = swr.set_digital_output_1_status(SwitchStatus.Off,DigitalOutputMode.Engage)
 
