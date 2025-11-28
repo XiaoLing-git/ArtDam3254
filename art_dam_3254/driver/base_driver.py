@@ -138,8 +138,10 @@ class BaseDriver(SerialWriteRead):
             Register_Address=register_map_value(AnalogChannelMapRangeAddress[channel]),
             Data=fill_data(mode.value),
         )
+        print(f"cmd = {cmd}")
         self.send_command(cmd)
         response = self.get_response()
+        print(f"res = {response}")
         return AnalogInputRange.map_value(response.Data)
 
     def get_digital_input_1_work_mode(self) -> DigitalInputWorkMode:

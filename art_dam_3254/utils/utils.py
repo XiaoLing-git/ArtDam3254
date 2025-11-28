@@ -150,4 +150,5 @@ def fill_data(target: str, _length: int = 4) -> str:
         if time.time() - start_time > 1:
             break
         target = "0" + target
+    print(f"target = {target}")
     return target

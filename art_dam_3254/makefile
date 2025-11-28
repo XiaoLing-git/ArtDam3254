@@ -19,7 +19,6 @@ endif
 
 
 RUN := poetry run
-SUB_FOLDER :=
 
 
 clean_cache:
