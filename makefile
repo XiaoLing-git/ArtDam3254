@@ -19,7 +19,7 @@ endif
 
 RUN := poetry run
 PRECOMMIT := pre-commit run
-SUB_FOLDER := src test
+SUB_FOLDER := art_dam_3254 test
 
 
 clean_cache:

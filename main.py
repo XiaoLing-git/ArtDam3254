@@ -13,7 +13,7 @@ logging.basicConfig(
 
 if __name__ == "__main__":
 
-    swr = BaseDriver(port="/dev/ttyUSB0",baud_rate=9600,timeout=5,device_address="01")
+    swr = BaseDriver(port="COM12",baud_rate=9600,timeout=5,device_address="01")
     swr.connect()
 
     res = swr.get_analog_channel_value(AnalogChannel.ch1)
